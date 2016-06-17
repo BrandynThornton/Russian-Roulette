@@ -1,0 +1,28 @@
+TOPIC
+    Russian-Roulette 1.0.0
+
+SHORT DESCRIPTION
+    Plays a deadly game of Russian Roulette.
+
+LONG DESCRIPTION
+    From wikipedia (https://en.wikipedia.org/wiki/Russian_roulette):
+    
+    Russian roulette (Russian: Русская рулетка) is a lethal game of chance in which
+    a player places a single round in a revolver, 
+    spins the cylinder, 
+    places the muzzle against their head, 
+    and pulls the trigger. 
+    
+    "Russian" refers to the supposed country of origin, and
+    roulette to the element of risk-taking and the spinning 
+    of the revolver's cylinder, which is reminiscent of 
+    a spinning roulette wheel.
+    
+  RUSSIAN-ROULETTE
+  To start a game of Russian Roulette:
+
+     1. Start Windows PowerShell with the "Run as administrator" option.
+     2. Type:
+
+        Russian-Roulette
+
