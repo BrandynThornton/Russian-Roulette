@@ -48,7 +48,7 @@ function Russian-Roulette() {
   .EXAMPLE
     Russian-Roulette
   .EXAMPLE
-    { spps -name powershell } | Russian-Roulette -Pulls 3
+    { spps -name powershell } | Russian-Roulette -Pulls 3 -Force
   .PARAMETER Command
     The Command you want to risk executing, can be piped in. Default: Stop-Computer -Force
   .PARAMETER Pulls
@@ -61,7 +61,8 @@ function Russian-Roulette() {
     ValueFromPipelineByPropertyName=$True,
     HelpMessage='What command would you like to risk executing?')]
     [ScriptBlock]$Command = { Stop-Computer -Force },
-    [int]$Pulls = 7
+    [int]$Pulls = 7,
+    [switch]$Force = $false
   )
     cls
     $script:totalPulls = 0
@@ -102,8 +103,13 @@ function Prep() {
             Write-Host $line
         }
     }
-    Write-Host "What will you do?"
-    $answer = Read-Host -Prompt '1. Pull the trigger. 2. Walk away.'
+
+    if ($Force) {
+        $answer = 1
+    } else {
+        Write-Host "What will you do?"
+        $answer = Read-Host -Prompt '1. Pull the trigger. 2. Walk away.'
+    }
 
     if ($answer -eq 2) {
         Write-Host "You put the revolver down, take another shot of tequilla, and cry into your pillow until you pass out."
