@@ -53,6 +53,8 @@ function Russian-Roulette() {
     The Command you want to risk executing, can be piped in. Default: Stop-Computer -Force
   .PARAMETER Pulls
     The number of times you are willing to pull the trigger. Default: 7
+  .PARAMETER Force
+    Bypasses the user prompt for action. Default: False
   #>
   param
   (
