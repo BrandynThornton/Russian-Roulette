@@ -29,13 +29,38 @@ function Get-Forehead() {
 }
 
 function Russian-Roulette() {
+  <#
+  .SYNOPSIS
+    Plays a deadly game of Russian Roulette.
+  .DESCRIPTION
+    From wikipedia (https://en.wikipedia.org/wiki/Russian_roulette):
+    
+    Russian roulette (Russian: Русская рулетка) is a lethal game of chance in which
+    a player places a single round in a revolver, 
+    spins the cylinder, 
+    places the muzzle against their head, 
+    and pulls the trigger. 
+    
+    "Russian" refers to the supposed country of origin, and
+    roulette to the element of risk-taking and the spinning 
+    of the revolver's cylinder, which is reminiscent of 
+    a spinning roulette wheel.
+  .EXAMPLE
+    Russian-Roulette
+  .EXAMPLE
+    { spps -name powershell } | Russian-Roulette -Pulls 3
+  .PARAMETER Command
+    The Command you want to risk executing, can be piped in. Default: Stop-Computer -Force
+  .PARAMETER Pulls
+    The number of times you are willing to pull the trigger. Default: 7
+  #>
   param
   (
     [Parameter(Mandatory=$False,
     ValueFromPipeline=$True,
     ValueFromPipelineByPropertyName=$True,
     HelpMessage='What command would you like to risk executing?')]
-    [ScriptBlock]$Command,
+    [ScriptBlock]$Command = { Stop-Computer -Force },
     [int]$Pulls = 7
   )
     cls
@@ -64,10 +89,18 @@ function Prep() {
         $index = $maxSweatDrops
     }
     foreach ($line in $script:sweat[$index]) {
-        Write-Host $line
+        if($line.Length -gt [Console]::BufferWidth) {
+            Write-Host $line.Substring(0, [Console]::BufferWidth)
+        } else {
+            Write-Host $line
+        }
     }
     foreach ($line in $script:face) {
-        Write-Host $line
+        if($line.Length -gt [Console]::BufferWidth) {
+            Write-Host $line.Substring(0, [Console]::BufferWidth)
+        } else {
+            Write-Host $line
+        }
     }
     Write-Host "What will you do?"
     $answer = Read-Host -Prompt '1. Pull the trigger. 2. Walk away.'
@@ -95,11 +128,7 @@ function Prep() {
             Write-Host "B::::::::::::::::BA:::::A                 A:::::A N::::::N        N::::::N     GGG::::::GGG:::G!!:!!"
             Write-Host "BBBBBBBBBBBBBBBBBAAAAAAA                   AAAAAAANNNNNNNN         NNNNNNN        GGGGGG   GGGG !!! "
             Start-Sleep -m 250
-            if ($Command -ne $null) {
-                & $Command
-            } else {
-                Stop-Computer -Force
-            }
+            & $Command
             return
         } else {
             Write-Host "CLICK, a bead of sweat rolls down your forehead and you live to tell the tale."
